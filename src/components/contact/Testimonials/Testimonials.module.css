@@ -1,0 +1,105 @@
+.testimonialsSection {
+  padding: var(--spacing-3xl) 0;
+  background-color: var(--color-background);
+}
+
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-2xl);
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+  color: var(--color-text);
+}
+
+.testimonialCardsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.testimonialCard {
+  background-color: var(--color-background-light);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.testimonialCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.quoteIcon {
+  position: absolute;
+  top: var(--spacing-md);
+  left: var(--spacing-md);
+  font-size: 70px;
+  line-height: 1;
+  color: rgba(124, 58, 237, 0.1);
+  font-family: serif;
+}
+
+.quote {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 var(--spacing-lg);
+  padding-top: var(--spacing-lg);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  color: var(--color-text);
+  font-style: italic;
+}
+
+.authorInfo {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--spacing-md);
+}
+
+.authorName {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-base);
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text);
+}
+
+.authorDetails {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .testimonialCard {
+    background-color: var(--color-background-light);
+  }
+  
+  .quoteIcon {
+    color: rgba(124, 58, 237, 0.2);
+  }
+  
+  .authorInfo {
+    border-top-color: var(--color-border-dark);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .testimonialsSection {
+    padding: var(--spacing-2xl) 0;
+  }
+  
+  .sectionTitle {
+    font-size: var(--font-size-xl);
+  }
+  
+  .testimonialCardsContainer {
+    grid-template-columns: 1fr;
+  }
+}

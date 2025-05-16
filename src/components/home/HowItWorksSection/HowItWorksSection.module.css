@@ -1,0 +1,346 @@
+.howItWorksSection {
+  padding: var(--spacing-3xl) 0;
+  background-color: var(--color-background-light);
+  overflow: hidden;
+}
+
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.sectionHeader {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto var(--spacing-2xl);
+}
+
+.title {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text);
+}
+
+.subtitle {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-light);
+  line-height: 1.6;
+}
+
+.stepsContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--spacing-2xl);
+}
+
+@media (min-width: 1024px) {
+  .stepsContainer {
+    flex-direction: row;
+    gap: var(--spacing-2xl);
+  }
+  
+  .stepsFlow {
+    flex: 1;
+  }
+  
+  .illustration {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.stepsFlow {
+  position: relative;
+  padding: var(--spacing-xl) 0;
+}
+
+.connectionLine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 24px;
+  width: 2px;
+  background-color: var(--color-primary-light);
+  z-index: 1;
+}
+
+.step {
+  position: relative;
+  display: flex;
+  margin-bottom: var(--spacing-xl);
+  z-index: 2;
+}
+
+.stepNumber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  color: white;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-lg);
+  flex-shrink: 0;
+  margin-right: var(--spacing-lg);
+  z-index: 2;
+  box-shadow: 0 0 0 8px rgba(37, 99, 235, 0.1);
+}
+
+.stepContent {
+  flex: 1;
+  background-color: var(--color-background);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-fast);
+}
+
+.stepContent:hover {
+  transform: translateX(5px);
+}
+
+.iconContainer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--border-radius-md);
+  background-color: rgba(37, 99, 235, 0.1);
+  margin-bottom: var(--spacing-sm);
+}
+
+.icon {
+  font-size: 20px;
+}
+
+.stepTitle {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text);
+}
+
+.stepDescription {
+  font-size: var(--font-size-base);
+  color: var(--color-text-light);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-sm);
+}
+
+.microDetail {
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.illustration {
+  margin-top: var(--spacing-xl);
+}
+
+.illustrationPlaceholder {
+  width: 100%;
+  height: 300px;
+  background-color: rgba(37, 99, 235, 0.05);
+  border-radius: var(--border-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Animation for data flow */
+.dataFlow {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+}
+
+.dataPoint {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: var(--color-primary-light);
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
+.dataPoint:nth-child(1) {
+  top: 20%;
+  left: 10%;
+  animation: moveToCenter 3s infinite;
+}
+
+.dataPoint:nth-child(2) {
+  top: 40%;
+  left: 15%;
+  animation: moveToCenter 2.5s infinite 0.5s;
+}
+
+.dataPoint:nth-child(3) {
+  top: 60%;
+  left: 5%;
+  animation: moveToCenter 4s infinite 1s;
+}
+
+.processingCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);
+  animation: pulse 2s infinite;
+}
+
+.processingCenter::after {
+  content: '🧠';
+  font-size: 24px;
+}
+
+.insightPoint {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: var(--color-success);
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
+.insightPoint:nth-child(5) {
+  top: 30%;
+  right: 10%;
+  animation: moveFromCenter 3s infinite;
+}
+
+.insightPoint:nth-child(6) {
+  top: 50%;
+  right: 15%;
+  animation: moveFromCenter 2.5s infinite 0.5s;
+}
+
+.insightPoint:nth-child(7) {
+  top: 70%;
+  right: 5%;
+  animation: moveFromCenter 4s infinite 1s;
+}
+
+@keyframes moveToCenter {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0.7;
+  }
+  75% {
+    transform: translate(200%, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes moveFromCenter {
+  0% {
+    transform: translate(-200%, 0);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(0, 0);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 20px rgba(37, 99, 235, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+  }
+}
+
+.emphasisBox {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+  justify-content: center;
+  margin-top: var(--spacing-xl);
+}
+
+.emphasisItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  background-color: var(--color-background);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.emphasisIcon {
+  font-size: 24px;
+}
+
+.emphasisText {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  margin: 0;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .stepContent {
+    background-color: var(--color-background-light);
+  }
+  
+  .emphasisItem {
+    background-color: var(--color-background-light);
+  }
+  
+  .illustrationPlaceholder {
+    background-color: rgba(37, 99, 235, 0.1);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .howItWorksSection {
+    padding: var(--spacing-2xl) 0;
+  }
+  
+  .title {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .subtitle {
+    font-size: var(--font-size-base);
+  }
+  
+  .emphasisBox {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .illustrationPlaceholder {
+    height: 200px;
+  }
+}

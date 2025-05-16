@@ -1,0 +1,199 @@
+.featuresSection {
+  padding: var(--spacing-3xl) 0;
+  background-color: var(--color-background);
+}
+
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.sectionHeader {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto var(--spacing-2xl);
+}
+
+.title {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text);
+}
+
+.subtitle {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-light);
+  line-height: 1.6;
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.featureCard {
+  background-color: var(--color-background-light);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.featureCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.iconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: var(--border-radius-lg);
+  background-color: rgba(37, 99, 235, 0.1);
+  margin-bottom: var(--spacing-md);
+}
+
+.icon {
+  font-size: 24px;
+}
+
+.featureTitle {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text);
+}
+
+.featureDescription {
+  font-size: var(--font-size-base);
+  color: var(--color-text-light);
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.ctaContainer {
+  text-align: center;
+  margin-top: var(--spacing-xl);
+}
+
+.ctaButton {
+  background-color: var(--color-primary);
+  color: white;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  padding: var(--spacing-md) var(--spacing-xl);
+  border-radius: var(--border-radius-md);
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  box-shadow: var(--shadow-md);
+}
+
+.ctaButton:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.ctaButton:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Feature card color variations */
+.featureCard:nth-child(1) .iconContainer {
+  background-color: rgba(37, 99, 235, 0.1);
+}
+
+.featureCard:nth-child(2) .iconContainer {
+  background-color: rgba(245, 158, 11, 0.1);
+}
+
+.featureCard:nth-child(3) .iconContainer {
+  background-color: rgba(124, 58, 237, 0.1);
+}
+
+.featureCard:nth-child(4) .iconContainer {
+  background-color: rgba(16, 185, 129, 0.1);
+}
+
+.featureCard:nth-child(5) .iconContainer {
+  background-color: rgba(236, 72, 153, 0.1);
+}
+
+.featureCard:nth-child(6) .iconContainer {
+  background-color: rgba(6, 182, 212, 0.1);
+}
+
+.featureCard:nth-child(7) .iconContainer {
+  background-color: rgba(79, 70, 229, 0.1);
+}
+
+.featureCard:nth-child(8) .iconContainer {
+  background-color: rgba(220, 38, 38, 0.1);
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .featureCard {
+    background-color: var(--color-background-light);
+  }
+  
+  .featureCard:nth-child(1) .iconContainer {
+    background-color: rgba(37, 99, 235, 0.2);
+  }
+  
+  .featureCard:nth-child(2) .iconContainer {
+    background-color: rgba(245, 158, 11, 0.2);
+  }
+  
+  .featureCard:nth-child(3) .iconContainer {
+    background-color: rgba(124, 58, 237, 0.2);
+  }
+  
+  .featureCard:nth-child(4) .iconContainer {
+    background-color: rgba(16, 185, 129, 0.2);
+  }
+  
+  .featureCard:nth-child(5) .iconContainer {
+    background-color: rgba(236, 72, 153, 0.2);
+  }
+  
+  .featureCard:nth-child(6) .iconContainer {
+    background-color: rgba(6, 182, 212, 0.2);
+  }
+  
+  .featureCard:nth-child(7) .iconContainer {
+    background-color: rgba(79, 70, 229, 0.2);
+  }
+  
+  .featureCard:nth-child(8) .iconContainer {
+    background-color: rgba(220, 38, 38, 0.2);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .featuresSection {
+    padding: var(--spacing-2xl) 0;
+  }
+  
+  .title {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .subtitle {
+    font-size: var(--font-size-base);
+  }
+  
+  .featuresGrid {
+    grid-template-columns: 1fr;
+  }
+}

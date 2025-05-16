@@ -1,0 +1,57 @@
+.faqSection {
+  padding: var(--spacing-3xl) 0;
+  background-color: var(--color-background);
+}
+
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.contactInfo {
+  text-align: center;
+  margin-top: var(--spacing-2xl);
+  padding: var(--spacing-lg);
+  background-color: var(--color-background-light);
+  border-radius: var(--border-radius-lg);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.moreQuestions {
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  margin-bottom: var(--spacing-md);
+}
+
+.contactLink {
+  display: inline-block;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--border-radius-md);
+  transition: all var(--transition-fast);
+}
+
+.contactLink:hover {
+  background-color: var(--color-primary);
+  color: white;
+  text-decoration: none;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .contactInfo {
+    background-color: var(--color-background-light);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .faqSection {
+    padding: var(--spacing-2xl) 0;
+  }
+}

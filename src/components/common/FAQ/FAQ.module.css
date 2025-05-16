@@ -1,0 +1,112 @@
+.faqContainer {
+  width: 100%;
+}
+
+.faqHeader {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.title {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--spacing-md);
+}
+
+.description {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-light);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.faqList {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faqItem {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.faqItem:first-child {
+  border-top: 1px solid var(--color-border);
+}
+
+.question {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: var(--spacing-lg) var(--spacing-md);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color var(--transition-fast);
+}
+
+.question:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.icon {
+  font-size: var(--font-size-xl);
+  color: var(--color-primary);
+  transition: transform var(--transition-fast);
+}
+
+.faqItem.active .icon {
+  transform: rotate(180deg);
+}
+
+.answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--transition-normal), opacity var(--transition-normal);
+}
+
+.answerContent {
+  padding: 0 var(--spacing-md) var(--spacing-lg);
+  color: var(--color-text-light);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+}
+
+.answerContent p:last-child {
+  margin-bottom: 0;
+}
+
+.answerContent a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.answerContent a:hover {
+  text-decoration: underline;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .question:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .title {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .description {
+    font-size: var(--font-size-base);
+  }
+  
+  .question {
+    font-size: var(--font-size-base);
+    padding: var(--spacing-md);
+  }
+}
