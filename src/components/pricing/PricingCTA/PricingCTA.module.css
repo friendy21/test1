@@ -1,0 +1,201 @@
+.ctaSection {
+  padding: var(--spacing-3xl) 0;
+  background-color: var(--color-background-light);
+}
+
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.ctaCard {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  color: white;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--spacing-2xl);
+  margin-bottom: var(--spacing-2xl);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--spacing-xl);
+}
+
+.content {
+  flex: 1 1 400px;
+}
+
+.title {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--spacing-md);
+  color: white;
+}
+
+.description {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-xl);
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.ctaButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+}
+
+.guaranteeContainer {
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  justify-content: center;
+}
+
+.guaranteeBadge {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-md);
+  backdrop-filter: blur(5px);
+}
+
+.badgeIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  color: var(--color-primary);
+  border-radius: 50%;
+  font-size: var(--font-size-lg);
+  flex-shrink: 0;
+}
+
+.badgeContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.badgeTitle {
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-base);
+}
+
+.badgeText {
+  font-size: var(--font-size-sm);
+  opacity: 0.9;
+}
+
+.enterpriseBox {
+  background-color: var(--color-background);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-xl);
+  text-align: center;
+}
+
+.enterpriseContent {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.enterpriseTitle {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text);
+}
+
+.enterpriseText {
+  font-size: var(--font-size-base);
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-lg);
+  line-height: 1.6;
+}
+
+.enterpriseLink {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--border-radius-md);
+  transition: all var(--transition-fast);
+}
+
+.enterpriseLink:hover {
+  background-color: var(--color-primary);
+  color: white;
+  text-decoration: none;
+}
+
+/* Button overrides for this section */
+.ctaButtons :global(.button-outline) {
+  background-color: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.ctaButtons :global(.button-outline:hover) {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: white;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .enterpriseBox {
+    background-color: var(--color-background-light);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ctaSection {
+    padding: var(--spacing-2xl) 0;
+  }
+
+  .ctaCard {
+    padding: var(--spacing-xl);
+    gap: var(--spacing-lg);
+  }
+
+  .title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .description {
+    font-size: var(--font-size-base);
+  }
+
+  .ctaButtons {
+    flex-direction: column;
+  }
+
+  .guaranteeContainer {
+    gap: var(--spacing-sm);
+  }
+
+  .guaranteeBadge {
+    padding: var(--spacing-sm);
+  }
+
+  .badgeIcon {
+    width: 32px;
+    height: 32px;
+    font-size: var(--font-size-base);
+  }
+
+  .badgeTitle {
+    font-size: var(--font-size-sm);
+  }
+
+  .badgeText {
+    font-size: var(--font-size-xs);
+  }
+}

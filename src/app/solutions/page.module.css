@@ -1,0 +1,404 @@
+.solutionsPage {
+  margin-top: var(--header-height);
+}
+
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  color: white;
+  padding: var(--spacing-3xl) 0;
+}
+
+.heroContent {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.heroTitle {
+  font-size: var(--font-size-4xl);
+  margin-bottom: var(--spacing-lg);
+}
+
+.heroDescription {
+  font-size: var(--font-size-lg);
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.navigationSection {
+  background-color: var(--color-background);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--spacing-lg) 0;
+}
+
+.solutionsNav {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: var(--spacing-xl);
+}
+
+.navSection {
+  flex: 1;
+  min-width: 250px;
+}
+
+.navTitle {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.navLink {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: var(--color-background-light);
+  border-radius: var(--border-radius-md);
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+  transition: all var(--transition-fast);
+}
+
+.navLink:hover {
+  background-color: var(--color-primary-light);
+  color: white;
+}
+
+.challengesSection, .departmentSection {
+  padding: var(--spacing-3xl) 0;
+}
+
+.challengesSection {
+  background-color: var(--color-background-light);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-3xl);
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+  color: var(--color-text);
+}
+
+.challengesContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.challengeCard {
+  background-color: var(--color-background);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.challengeCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.challengeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-md);
+}
+
+.challengeTitle {
+  font-size: var(--font-size-xl);
+  color: var(--color-text);
+  margin: 0;
+  flex: 1;
+}
+
+.challengeNumber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: var(--color-primary);
+  color: white;
+  border-radius: 50%;
+  font-weight: var(--font-weight-bold);
+  flex-shrink: 0;
+}
+
+.challengeDescription {
+  font-size: var(--font-size-base);
+  color: var(--color-text-light);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-lg);
+}
+
+.helpSection, .metricsSection {
+  margin-bottom: var(--spacing-lg);
+}
+
+.helpTitle, .metricsTitle {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text);
+}
+
+.helpList, .metricsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.helpItem, .metricItem {
+  padding: var(--spacing-xs) 0;
+  display: flex;
+  align-items: flex-start;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  line-height: 1.5;
+}
+
+.helpItem::before, .metricItem::before {
+  content: '✓';
+  color: var(--color-success);
+  margin-right: var(--spacing-sm);
+  flex-shrink: 0;
+}
+
+.impactHighlight {
+  margin-top: auto;
+  padding: var(--spacing-md);
+  background-color: rgba(37, 99, 235, 0.05);
+  border-radius: var(--border-radius-md);
+}
+
+.impactTitle {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-primary);
+}
+
+.impactText {
+  font-size: var(--font-size-sm);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.departmentsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.departmentCard {
+  background-color: var(--color-background-light);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.departmentCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.departmentTitle {
+  font-size: var(--font-size-xl);
+  color: var(--color-text);
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.challengesSection, .solutionsSection {
+  margin-bottom: var(--spacing-lg);
+}
+
+.sectionSubtitle {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text);
+}
+
+.bulletList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--spacing-md) 0;
+}
+
+.bulletList li {
+  padding: var(--spacing-xs) 0;
+  display: flex;
+  align-items: flex-start;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  line-height: 1.5;
+}
+
+.bulletList li::before {
+  content: '•';
+  color: var(--color-primary);
+  margin-right: var(--spacing-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.dashboardPreview {
+  margin-top: auto;
+  padding-top: var(--spacing-lg);
+}
+
+.dashboardTitle {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text);
+}
+
+.dashboardPlaceholder {
+  background-color: var(--color-background);
+  border-radius: var(--border-radius-md);
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.dashboardText {
+  color: var(--color-text-light);
+  font-size: var(--font-size-sm);
+}
+
+.dashboardCaption {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-light);
+  font-style: italic;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.ctaSection {
+  background-color: var(--color-primary);
+  color: white;
+  padding: var(--spacing-3xl) 0;
+}
+
+.ctaContent {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.ctaTitle {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--spacing-md);
+}
+
+.ctaDescription {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-xl);
+  opacity: 0.9;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .navigationSection {
+    background-color: var(--color-background-light);
+    border-bottom-color: var(--color-border-dark);
+  }
+  
+  .navLink {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  .navLink:hover {
+    background-color: var(--color-primary);
+  }
+  
+  .challengeCard {
+    background-color: var(--color-background-light);
+  }
+  
+  .departmentCard {
+    background-color: var(--color-background);
+  }
+  
+  .impactHighlight {
+    background-color: rgba(37, 99, 235, 0.1);
+  }
+  
+  .dashboardPlaceholder {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero {
+    padding: var(--spacing-2xl) 0;
+  }
+  
+  .heroTitle {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .heroDescription {
+    font-size: var(--font-size-base);
+  }
+  
+  .navSection {
+    flex: 1 0 100%;
+  }
+  
+  .challengesSection, .departmentSection {
+    padding: var(--spacing-2xl) 0;
+  }
+  
+  .sectionTitle {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .challengesContainer, .departmentsContainer {
+    grid-template-columns: 1fr;
+  }
+  
+  .ctaSection {
+    padding: var(--spacing-2xl) 0;
+  }
+  
+  .ctaTitle {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .ctaDescription {
+    font-size: var(--font-size-base);
+  }
+}

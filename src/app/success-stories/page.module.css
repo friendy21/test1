@@ -1,0 +1,512 @@
+.successStoriesPage {
+  margin-top: var(--header-height);
+}
+
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  color: white;
+  padding: var(--spacing-3xl) 0;
+}
+
+.heroContent {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.heroTitle {
+  font-size: var(--font-size-4xl);
+  margin-bottom: var(--spacing-lg);
+}
+
+.heroDescription {
+  font-size: var(--font-size-lg);
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.featuredScenarioSection {
+  padding: var(--spacing-3xl) 0;
+  background-color: var(--color-background);
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.featuredLabel {
+  display: inline-block;
+  background-color: var(--color-primary);
+  color: white;
+  font-size: var(--font-size-base);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--border-radius-full);
+  margin-bottom: var(--spacing-sm);
+}
+
+.featuredScenarioCard {
+  background-color: var(--color-background-light);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.scenarioHeader {
+  background-color: var(--color-primary);
+  color: white;
+  padding: var(--spacing-lg) var(--spacing-xl);
+}
+
+.industryLabel {
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: var(--spacing-xs);
+}
+
+.scenarioTitle {
+  font-size: var(--font-size-2xl);
+  margin: 0;
+}
+
+.scenarioContent {
+  padding: var(--spacing-xl);
+}
+
+.challengeSection, .solutionSection, .actionsSection, .resultsSection {
+  margin-bottom: var(--spacing-xl);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text);
+}
+
+.challengeText {
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  color: var(--color-text-light);
+}
+
+.solutionIntro, .actionsIntro, .resultsIntro {
+  font-size: var(--font-size-base);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-light);
+}
+
+.solutionList, .actionsList, .resultsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.solutionItem, .actionItem, .resultItem {
+  padding: var(--spacing-sm) 0;
+  display: flex;
+  align-items: flex-start;
+  font-size: var(--font-size-base);
+  color: var(--color-text-light);
+  line-height: 1.5;
+}
+
+.solutionItem::before, .actionItem::before, .resultItem::before {
+  content: '✓';
+  color: var(--color-success);
+  margin-right: var(--spacing-sm);
+  flex-shrink: 0;
+}
+
+.roiHighlight {
+  padding: var(--spacing-lg);
+  background-color: rgba(37, 99, 235, 0.05);
+  border-radius: var(--border-radius-md);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.roiLabel {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+  white-space: nowrap;
+  color: var(--color-primary);
+}
+
+.roiText {
+  font-size: var(--font-size-base);
+  margin: 0;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+.industryApplicationsSection {
+  padding: var(--spacing-3xl) 0;
+  background-color: var(--color-background-light);
+}
+
+.sectionHeading {
+  font-size: var(--font-size-3xl);
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+  color: var(--color-text);
+}
+
+.applicationCardsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.applicationCard {
+  background-color: var(--color-background);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.applicationCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.applicationHeader {
+  background-color: var(--color-secondary);
+  color: white;
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.applicationTitle {
+  font-size: var(--font-size-lg);
+  margin: 0;
+}
+
+.applicationBody {
+  padding: var(--spacing-lg);
+  flex-grow: 1;
+}
+
+.applicationChallenge, .applicationSolution {
+  margin-bottom: var(--spacing-md);
+}
+
+.applicationSubtitle {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text);
+}
+
+.applicationChallenge p {
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  color: var(--color-text-light);
+  margin: 0;
+}
+
+.solutionList, .outcomesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.solutionList li, .outcomesList li {
+  padding: var(--spacing-xs) 0;
+  display: flex;
+  align-items: flex-start;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  line-height: 1.5;
+}
+
+.solutionList li::before, .outcomesList li::before {
+  content: '•';
+  color: var(--color-secondary);
+  margin-right: var(--spacing-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.applicationVisualization {
+  padding: var(--spacing-md);
+  background-color: var(--color-background-light);
+}
+
+.visualizationPlaceholder {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(124, 58, 237, 0.05);
+  color: var(--color-text-light);
+  font-size: var(--font-size-sm);
+  border-radius: var(--border-radius-md);
+}
+
+.functionUseCasesSection {
+  padding: var(--spacing-3xl) 0;
+  background-color: var(--color-background);
+}
+
+.useCaseCardsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.useCaseCard {
+  background-color: var(--color-background-light);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.useCaseCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.useCaseHeader {
+  background-color: var(--color-accent);
+  color: white;
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.useCaseTitle {
+  font-size: var(--font-size-lg);
+  margin: 0 0 var(--spacing-xs);
+}
+
+.useCaseSubtitle {
+  font-size: var(--font-size-sm);
+  opacity: 0.9;
+}
+
+.useCaseBody {
+  padding: var(--spacing-lg);
+  flex-grow: 1;
+}
+
+.useCaseChallenge, .useCaseSolution {
+  margin-bottom: var(--spacing-md);
+}
+
+.useCaseHeading {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text);
+}
+
+.useCaseChallenge p {
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  color: var(--color-text-light);
+  margin: 0;
+}
+
+.useCaseSolutionList, .useCaseMetricsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.useCaseSolutionList li, .useCaseMetricsList li {
+  padding: var(--spacing-xs) 0;
+  display: flex;
+  align-items: flex-start;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  line-height: 1.5;
+}
+
+.useCaseSolutionList li::before, .useCaseMetricsList li::before {
+  content: '•';
+  color: var(--color-accent);
+  margin-right: var(--spacing-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.useCaseVisualization {
+  padding: var(--spacing-md);
+  background-color: var(--color-background);
+}
+
+.expertTestimonialsSection {
+  padding: var(--spacing-3xl) 0;
+  background-color: var(--color-background-light);
+}
+
+.testimonialsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.testimonialCard {
+  background-color: var(--color-background);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.testimonialCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.quoteIcon {
+  position: absolute;
+  top: var(--spacing-md);
+  left: var(--spacing-md);
+  font-size: 70px;
+  line-height: 1;
+  color: rgba(124, 58, 237, 0.1);
+  font-family: serif;
+}
+
+.testimonialQuote {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 var(--spacing-lg);
+  padding-top: var(--spacing-lg);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  color: var(--color-text);
+  font-style: italic;
+}
+
+.testimonialAuthor {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--spacing-md);
+}
+
+.authorName {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-base);
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text);
+}
+
+.authorTitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+}
+
+.ctaSection {
+  background-color: var(--color-primary);
+  color: white;
+  padding: var(--spacing-3xl) 0;
+}
+
+.ctaContent {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.ctaTitle {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--spacing-md);
+}
+
+.ctaDescription {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-xl);
+  opacity: 0.9;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .featuredScenarioCard {
+    background-color: var(--color-background-light);
+  }
+  
+  .applicationCard {
+    background-color: var(--color-background-light);
+  }
+  
+  .useCaseCard {
+    background-color: var(--color-background);
+  }
+  
+  .testimonialCard {
+    background-color: var(--color-background-light);
+  }
+  
+  .testimonialAuthor {
+    border-top-color: var(--color-border-dark);
+  }
+  
+  .roiHighlight {
+    background-color: rgba(37, 99, 235, 0.1);
+  }
+  
+  .applicationVisualization {
+    background-color: var(--color-background);
+  }
+  
+  .visualizationPlaceholder {
+    background-color: rgba(124, 58, 237, 0.1);
+  }
+  
+  .useCaseVisualization {
+    background-color: var(--color-background-light);
+  }
+  
+  .quoteIcon {
+    color: rgba(124, 58, 237, 0.2);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero, .featuredScenarioSection, .industryApplicationsSection, 
+  .functionUseCasesSection, .expertTestimonialsSection, .ctaSection {
+    padding: var(--spacing-2xl) 0;
+  }
+  
+  .heroTitle, .ctaTitle {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .heroDescription, .ctaDescription {
+    font-size: var(--font-size-base);
+  }
+  
+  .sectionHeading {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .scenarioTitle {
+    font-size: var(--font-size-xl);
+  }
+  
+  .applicationCardsContainer, .useCaseCardsContainer, .testimonialsContainer {
+    grid-template-columns: 1fr;
+  }
+  
+  .roiHighlight {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    align-items: flex-start;
+  }
+}

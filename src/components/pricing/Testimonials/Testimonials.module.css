@@ -1,0 +1,247 @@
+.testimonialsSection {
+  padding: var(--spacing-3xl) 0;
+  background-color: var(--color-background);
+}
+
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.sectionHeader {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto var(--spacing-2xl);
+}
+
+.title {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text);
+}
+
+.subtitle {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-light);
+  line-height: 1.6;
+}
+
+.testimonialsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+.testimonialCard {
+  background-color: var(--color-background-light);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.testimonialCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.quoteContent {
+  padding: var(--spacing-xl);
+  flex-grow: 1;
+  position: relative;
+}
+
+.quoteIcon {
+  position: absolute;
+  top: var(--spacing-md);
+  left: var(--spacing-md);
+  font-size: 70px;
+  line-height: 1;
+  color: rgba(37, 99, 235, 0.1);
+  font-family: serif;
+}
+
+.quote {
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  margin: 0 0 var(--spacing-lg);
+  position: relative;
+  z-index: 1;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.highlightTag {
+  display: inline-block;
+  background-color: rgba(37, 99, 235, 0.1);
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-full);
+  margin-top: var(--spacing-md);
+}
+
+.testimonialFooter {
+  padding: var(--spacing-md) var(--spacing-xl);
+  background-color: rgba(0, 0, 0, 0.02);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.author {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.authorAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.avatarPlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-primary);
+  color: white;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-base);
+}
+
+.authorInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.authorName {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+}
+
+.authorTitle {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-light);
+}
+
+.companyLogo {
+  width: 80px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoPlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--color-text-light);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-base);
+  border-radius: var(--border-radius-sm);
+}
+
+.testimonialsFooter {
+  text-align: center;
+  margin-top: var(--spacing-xl);
+}
+
+.readMoreLink {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  transition: all var(--transition-fast);
+}
+
+.readMoreLink:hover {
+  background-color: rgba(37, 99, 235, 0.05);
+  text-decoration: none;
+}
+
+.readMoreLink::after {
+  content: '→';
+  margin-left: var(--spacing-sm);
+  transition: transform var(--transition-fast);
+}
+
+.readMoreLink:hover::after {
+  transform: translateX(4px);
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .testimonialCard {
+    background-color: var(--color-background-light);
+  }
+
+  .testimonialFooter {
+    background-color: rgba(255, 255, 255, 0.02);
+    border-top-color: var(--color-border-dark);
+  }
+
+  .logoPlaceholder {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .quoteIcon {
+    color: rgba(37, 99, 235, 0.2);
+  }
+
+  .highlightTag {
+    background-color: rgba(37, 99, 235, 0.2);
+  }
+
+  .readMoreLink:hover {
+    background-color: rgba(37, 99, 235, 0.1);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .testimonialsSection {
+    padding: var(--spacing-2xl) 0;
+  }
+
+  .title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .subtitle {
+    font-size: var(--font-size-base);
+  }
+
+  .testimonialsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .testimonialFooter {
+    flex-direction: column;
+    gap: var(--spacing-md);
+    align-items: flex-start;
+  }
+
+  .companyLogo {
+    align-self: flex-start;
+  }
+}

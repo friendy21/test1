@@ -1,0 +1,1155 @@
+.howItWorksSection {
+  /* Color variables */
+  --color-primary: #3b82f6;
+  --color-secondary: #0d9488;
+  --color-text-primary: #1f2937;
+  --color-text-secondary: #4b5563;
+  --color-text-tertiary: #6b7280;
+  --color-background: #fafafa;
+  --color-white: #ffffff;
+  --color-card-border: #f3f4f6;
+  
+  /* Spacing variables - mobile-first with fluid scaling */
+  --spacing-xs: clamp(4px, 0.5vw, 8px);
+  --spacing-sm: clamp(8px, 1vw, 12px);
+  --spacing-md: clamp(16px, 2vw, 20px);
+  --spacing-lg: clamp(24px, 3vw, 32px);
+  --spacing-xl: clamp(32px, 4vw, 48px);
+  --spacing-2xl: clamp(48px, 6vw, 64px);
+  --spacing-3xl: clamp(64px, 8vw, 96px);
+  --spacing-4xl: clamp(96px, 10vw, 128px);
+  
+  /* Border radius */
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 16px;
+  
+  /* Typography - fluid scaling */
+  --font-size-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --font-size-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+  --font-size-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+  --font-size-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);
+  --font-size-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
+  --font-size-2xl: clamp(1.5rem, 1.3rem + 1vw, 1.875rem);
+  --font-size-3xl: clamp(1.875rem, 1.6rem + 1.375vw, 2.5rem);
+  
+  /* Font weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Container width */
+  --container-width: 1280px;
+  
+  /* Animation speeds */
+  --animation-slow: 3s;
+  --animation-medium: 2s;
+  --animation-fast: 0.5s;
+  
+  /* Shadows - progressively enhance depth */
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Add scroll progress bar styles */
+.scrollProgress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.scrollProgressBar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  width: 0;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+/* Text line animations */
+.textLine {
+  display: inline-block;
+  overflow: hidden;
+  margin-right: 0.3rem;
+}
+
+.stepTextLine {
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Connection line with explicit height instead of using top/bottom */
+.connectionLine {
+  position: absolute;
+  top: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: calc(100% - 48px); /* Will be animated by GSAP */
+  background: linear-gradient(to bottom, var(--color-primary) 0%, var(--color-secondary) 100%);
+  z-index: 1;
+  overflow: hidden;
+  /* CSS variables animated by GSAP */
+  --line-offset: -100%;
+  --glow-opacity: 0.2;
+}
+
+/* Animation properties for CSS variables */
+@property --line-opacity {
+  syntax: '<number>';
+  initial-value: 0.3;
+  inherits: false;
+}
+
+@property --line-offset {
+  syntax: '<percentage>';
+  initial-value: -200%;
+  inherits: false;
+}
+
+@property --glow-opacity {
+  syntax: '<number>';
+  initial-value: 0;
+  inherits: false;
+}
+
+/* Base styles */
+.howItWorksSection {
+  position: relative;
+  padding: var(--spacing-2xl) 0 var(--spacing-3xl);
+  background-color: var(--color-background);
+  overflow: hidden;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+/* Background decoration with subtle grid and gradients */
+.backgroundDecoration {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.05;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.4) 0%, transparent 70%),
+    radial-gradient(circle at 80% 70%, rgba(13, 148, 136, 0.4) 0%, transparent 70%);
+}
+
+.backgroundDecoration::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px 45px),
+    linear-gradient(rgba(13, 148, 136, 0.05) 1px, transparent 1px 45px);
+  background-size: 45px 45px;
+  mask: linear-gradient(-20deg, transparent 40%, white);
+  z-index: -1;
+}
+
+/* Section header */
+.sectionHeader {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto var(--spacing-2xl);
+}
+
+.sectionBadge {
+  display: inline-block;
+  padding: 8px 16px;
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.1) 0%, rgba(13, 148, 136, 0.1) 100%);
+  border-radius: 20px;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-md);
+  position: relative;
+}
+
+/* Badge border glow effect using mask technique */
+.sectionBadge::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 20px;
+  padding: 1px;
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+}
+
+.sectionTitle {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--spacing-md);
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: var(--font-weight-bold);
+  padding: 0;
+}
+
+.sectionSubtitle {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+/* Steps container layout */
+.stepsContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.stepsFlow {
+  position: relative;
+  padding: var(--spacing-xl) 0;
+}
+
+/* Individual step styling - BEM approach */
+.step {
+  position: relative;
+  display: flex;
+  margin-bottom: var(--spacing-xl);
+  z-index: 2;
+  /* Add will-change for optimized animation performance */
+  will-change: transform, opacity;
+}
+
+.step:last-child {
+  margin-bottom: 0;
+}
+
+/* Step connector components */
+.stepConnector {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: var(--spacing-lg);
+}
+
+.stepNumber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  color: white;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-lg);
+  flex-shrink: 0;
+  z-index: 2;
+  box-shadow: 0 0 25px rgba(59, 130, 246, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shining effect on step numbers */
+.stepNumber::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(255, 255, 255, 0.6) 50%, 
+    rgba(255, 255, 255, 0) 100%);
+  transform: rotate(45deg);
+  animation: shine 5s infinite;
+  will-change: transform; /* Performance optimization */
+}
+
+@keyframes shine {
+  0% {
+    transform: rotate(45deg) translate(-100%, -100%);
+  }
+  20%, 100% {
+    transform: rotate(45deg) translate(100%, 100%);
+  }
+}
+
+/* Connection line with glow and particle flow */
+.connectionLine {
+  position: absolute;
+  top: 48px;
+  bottom: -48px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  background: linear-gradient(to bottom, var(--color-primary) 0%, var(--color-secondary) 100%);
+  z-index: 1;
+  overflow: hidden;
+  /* CSS variables animated by GSAP */
+  --line-offset: -100%;
+  --glow-opacity: 0.2;
+}
+
+.connectionLine::before {
+  content: '';
+  position: absolute;
+  top: var(--line-offset);
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, 
+    rgba(59, 130, 246, 0) 0%,
+    rgba(59, 130, 246, 0.8) 45%,
+    rgba(13, 148, 136, 0.8) 55%,
+    rgba(13, 148, 136, 0) 100%);
+  will-change: transform;
+}
+
+.connectionLine::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: 0 0 8px 2px rgba(59, 130, 246, var(--glow-opacity));
+  will-change: opacity;
+}
+
+.step:last-child .connectionLine {
+  display: none;
+}
+
+/* Animated connector dots */
+.connectorDots {
+  position: absolute;
+  top: 55px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  gap: 12px;
+  z-index: 2;
+}
+
+.connectorDots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  opacity: 0;
+  animation: dotPulse 2s infinite;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+  will-change: transform, opacity;
+}
+
+.connectorDots span:nth-child(2) {
+  animation-delay: 0.5s;
+  background-color: #389beb;
+}
+
+.connectorDots span:nth-child(3) {
+  animation-delay: 1s;
+  background-color: var(--color-secondary);
+}
+
+@keyframes dotPulse {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+}
+
+/* Step content styling */
+.stepContent {
+  flex: 1;
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-card-border);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  will-change: transform, box-shadow, clip-path;
+}
+
+/* Accent border with glow */
+.stepContent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--color-primary), var(--color-secondary));
+  /* Using filter instead of box-shadow for better performance */
+  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.3));
+}
+
+/* Hover interaction */
+.step:hover .stepContent {
+  transform: translateX(5px) translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Shine overlay effect on hover */
+.stepShine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(255, 255, 255, 0.03) 50%, 
+    rgba(255, 255, 255, 0) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  will-change: opacity;
+}
+
+.step:hover .stepShine {
+  opacity: 1;
+}
+
+/* Icon styling */
+.iconContainer {
+  margin-bottom: var(--spacing-md);
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(13, 148, 136, 0.1) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Rotating background effect for icons */
+.iconContainer::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
+  animation: rotateBg 8s linear infinite;
+  will-change: transform;
+}
+
+@keyframes rotateBg {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  color: var(--color-primary);
+  position: relative;
+  z-index: 1;
+}
+
+/* Step-specific icon colors */
+.step1 .icon {
+  color: var(--color-primary);
+}
+
+.step2 .icon {
+  color: #0284c7;
+}
+
+.step3 .icon {
+  color: var(--color-secondary);
+}
+
+.stepTitle {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.stepDescription {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-md);
+}
+
+/* Micro detail section */
+.microDetailContainer {
+  display: flex;
+  align-items: center;
+  background-color: rgba(59, 130, 246, 0.05);
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-top: var(--spacing-md);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle pulsing effect */
+.microDetailContainer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.1), transparent 70%);
+  opacity: 0;
+  animation: pulse 3s infinite alternate;
+  will-change: opacity, transform;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.microDetailIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.microDetailIcon svg {
+  width: 16px;
+  height: 16px;
+  color: var(--color-primary);
+}
+
+.microDetail {
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* Illustration Card */
+.illustration {
+  width: 100%;
+  margin-top: var(--spacing-xl);
+}
+
+.illustrationCard {
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  width: 100%;
+  height: clamp(300px, 50vw, 400px); /* Fluid height sizing */
+  border: 1px solid var(--color-card-border);
+  position: relative;
+}
+
+/* Inner glow effect */
+.illustrationCard::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.2) inset;
+  border-radius: var(--border-radius-lg);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #f9fafb;
+  border-bottom: 1px solid var(--color-card-border);
+  position: relative;
+  z-index: 2;
+}
+
+.cardControls {
+  display: flex;
+  gap: 6px;
+}
+
+.controlDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.controlDot:nth-child(1) {
+  background-color: #ef4444;
+}
+
+.controlDot:nth-child(2) {
+  background-color: #f59e0b;
+}
+
+.controlDot:nth-child(3) {
+  background-color: #10b981;
+}
+
+.cardTitle {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-tertiary);
+}
+
+.illustrationContent {
+  position: relative;
+  height: calc(100% - 45px); /* Subtract header height */
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.03) 0%, rgba(13, 148, 136, 0.03) 100%);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  z-index: 2;
+}
+
+/* Grid background for illustration */
+.illustrationContent::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px 30px),
+    linear-gradient(rgba(13, 148, 136, 0.03) 1px, transparent 1px 30px);
+  background-size: 30px 30px;
+  z-index: -1;
+}
+
+/* Source Systems */
+.sourceSystemsContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.sourceSystem {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
+  transition: transform 0.3s ease;
+}
+
+/* Hover effect for source systems */
+.sourceSystem:hover {
+  transform: translateY(-5px);
+}
+
+/* BEM naming for modifiers */
+.sourceSystem_slack,
+.sourceSystem_teams,
+.sourceSystem_jira {
+  /* System-specific styles can go here if needed */
+}
+
+/* Pulsing glow effect */
+.sourceSystem::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.3) inset;
+  opacity: 0;
+  animation: systemGlow 4s infinite alternate;
+  will-change: opacity;
+}
+
+@keyframes systemGlow {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.sourceIcon {
+  width: 32px;
+  height: 32px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Data Streams - animated by GSAP */
+.dataStreamsContainer {
+  position: absolute;
+  top: 90px;
+  left: 0;
+  right: 0;
+  height: 100px;
+  z-index: 1;
+}
+
+.dataStream {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+.dataParticle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  opacity: 0;
+  /* Animation handled by GSAP in component */
+  will-change: transform, opacity;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
+}
+
+.dataParticle:nth-child(1) {
+  left: 30%;
+  top: 20%;
+}
+
+.dataParticle:nth-child(2) {
+  left: 50%;
+  top: 40%;
+  background-color: #0284c7;
+}
+
+.dataParticle:nth-child(3) {
+  left: 70%;
+  top: 60%;
+  background-color: var(--color-secondary);
+  box-shadow: 0 0 10px rgba(13, 148, 136, 0.6);
+}
+
+.dataParticle:nth-child(4) {
+  left: 40%;
+  top: 30%;
+  background-color: #38bdf8;
+}
+
+/* Processing Center with rotating rings */
+.processingCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.processingRing {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: var(--color-primary);
+  border-bottom-color: var(--color-secondary);
+  animation: rotate 3s linear infinite;
+  /* Use filter instead of box-shadow for better performance */
+  filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.2));
+  will-change: transform;
+}
+
+.processingRing:nth-child(1) {
+  width: 100%;
+  height: 100%;
+  border-left-color: rgba(59, 130, 246, 0.2);
+  border-right-color: rgba(13, 148, 136, 0.2);
+  animation-duration: 3s;
+}
+
+.processingRing:nth-child(2) {
+  width: 80%;
+  height: 80%;
+  border-left-color: rgba(59, 130, 246, 0.4);
+  border-right-color: rgba(13, 148, 136, 0.4);
+  animation-duration: 2s;
+  animation-direction: reverse;
+}
+
+.processingRing:nth-child(3) {
+  width: 60%;
+  height: 60%;
+  border-left-color: rgba(59, 130, 246, 0.6);
+  border-right-color: rgba(13, 148, 136, 0.6);
+  animation-duration: 1.5s;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.processingCore {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Use filter instead of box-shadow for better performance */
+  filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.3));
+  z-index: 2;
+  will-change: transform, filter;
+  /* Animation applied with GSAP in component */
+}
+
+.processingIcon {
+  width: 24px;
+  height: 24px;
+}
+
+/* Insights Output */
+.insightsContainer {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 120px;
+  height: 100px;
+  z-index: 2;
+}
+
+.insightStream {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  right: 0;
+  height: 100px;
+}
+
+.insightParticle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-secondary);
+  opacity: 0;
+  /* Animation handled by GSAP in component */
+  will-change: transform, opacity;
+  box-shadow: 0 0 10px rgba(13, 148, 136, 0.6);
+}
+
+.insightParticle:nth-child(1) {
+  left: 30%;
+  top: 70%;
+}
+
+.insightParticle:nth-child(2) {
+  left: 50%;
+  top: 50%;
+  background-color: #0284c7;
+  box-shadow: 0 0 10px rgba(2, 132, 199, 0.6);
+}
+
+.insightParticle:nth-child(3) {
+  left: 70%;
+  top: 30%;
+  background-color: var(--color-primary);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
+}
+
+/* Dashboard visualization */
+.insightDashboard {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 60px;
+  background-color: var(--color-white);
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  gap: 4px;
+  overflow: hidden;
+}
+
+/* Shining effect on dashboard */
+.insightDashboard::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: rotate(45deg);
+  animation: dashboardShine 6s infinite;
+  will-change: transform;
+}
+
+@keyframes dashboardShine {
+  0% {
+    transform: rotate(45deg) translate(-100%, -100%);
+  }
+  20%, 100% {
+    transform: rotate(45deg) translate(100%, 100%);
+  }
+}
+
+.dashboardGraph {
+  height: 10px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  opacity: 0.8;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated shine effect for graphs */
+.dashboardGraph::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: graphShine 3s infinite;
+  will-change: transform;
+}
+
+@keyframes graphShine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+
+.dashboardGraph:nth-child(1) {
+  width: 80%;
+  animation-delay: 0s;
+}
+
+.dashboardGraph:nth-child(2) {
+  width: 60%;
+  animation-delay: 0.3s;
+}
+
+.dashboardGraph:nth-child(3) {
+  width: 90%;
+  animation-delay: 0.6s;
+}
+
+/* Emphasis Box */
+.emphasisBox {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  justify-content: center;
+  margin-top: var(--spacing-xl);
+}
+
+.emphasisItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  background-color: var(--color-white);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-card-border);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  will-change: transform, box-shadow;
+}
+
+.emphasisItem:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Shine effect on hover */
+.emphasisItem::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: rotate(45deg);
+  transition: opacity 0.5s;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.emphasisItem:hover::after {
+  animation: emphasisShine 1s forwards;
+}
+
+@keyframes emphasisShine {
+  0% {
+    transform: rotate(45deg) translate(-100%, -100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(45deg) translate(100%, 100%);
+    opacity: 0;
+  }
+}
+
+.emphasisIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(13, 148, 136, 0.1) 100%);
+  color: var(--color-primary);
+  position: relative;
+  z-index: 1;
+}
+
+.emphasisIcon::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.2), transparent 70%);
+  animation: iconGlow 3s infinite alternate;
+  will-change: opacity, transform;
+}
+
+@keyframes iconGlow {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+.emphasisIcon svg {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.emphasisText {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  margin: 0;
+  color: var(--color-text-secondary);
+  position: relative;
+  z-index: 1;
+}
+
+/* Responsive styles - Mobile First approach */
+@media (min-width: 640px) {
+  .emphasisBox {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+  }
+  
+  .emphasisItem {
+    flex: 1;
+    min-width: 250px;
+  }
+}
+
+@media (min-width: 768px) {
+  .howItWorksSection {
+    padding: var(--spacing-3xl) 0;
+  }
+  
+  .sectionSubtitle {
+    max-width: 80%;
+  }
+  
+  .stepContent {
+    padding: var(--spacing-xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .stepsContainer {
+    flex-direction: row;
+    gap: var(--spacing-2xl);
+    align-items: center;
+  }
+  
+  .stepsFlow {
+    flex: 1;
+    max-width: 50%;
+  }
+  
+  .illustration {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+  }
+  
+  .sectionSubtitle {
+    max-width: 70%;
+  }
+}
+

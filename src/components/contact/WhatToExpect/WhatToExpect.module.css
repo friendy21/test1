@@ -1,0 +1,140 @@
+.whatToExpectSection {
+  position: relative;
+  color: white;
+}
+
+.contentContainer {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sectionTitle {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--spacing-2xl);
+  text-align: center;
+  position: relative;
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background-color: white;
+  border-radius: 1.5px;
+}
+
+.stepsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.step {
+  display: flex;
+  gap: var(--spacing-lg);
+}
+
+.stepNumber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  color: var(--color-primary);
+  border-radius: 50%;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  flex-shrink: 0;
+}
+
+.stepContent {
+  flex: 1;
+}
+
+.stepTitle {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.stepDescription {
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.additionalInfo {
+  display: flex;
+  gap: var(--spacing-xl);
+  width: 100%;
+  max-width: 800px;
+  margin-top: var(--spacing-xl);
+}
+
+.infoBox {
+  flex: 1;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  display: flex;
+  gap: var(--spacing-md);
+  backdrop-filter: blur(5px);
+}
+
+.infoIcon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.infoContent {
+  flex: 1;
+}
+
+.infoTitle {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.infoDescription {
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .sectionTitle {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .step {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    align-items: center;
+    text-align: center;
+  }
+  
+  .additionalInfo {
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+  
+  .infoBox {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}

@@ -1,0 +1,50 @@
+/* src/app/contact/page.module.css */
+.contactPage {
+  margin-top: var(--header-height);
+}
+
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.mainContentContainer {
+  padding: var(--spacing-3xl) 0;
+  background-color: var(--color-background-light);
+}
+
+.formSection {
+  margin-bottom: var(--spacing-3xl);
+}
+
+.secondarySection {
+  background-color: var(--color-background);
+  padding: var(--spacing-3xl) 0;
+}
+
+.tertiarySection {
+  background-color: var(--color-primary);
+  color: white;
+  padding: var(--spacing-3xl) 0;
+}
+
+@media (min-width: 1024px) {
+  .mainContentContainer .container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--spacing-3xl);
+  }
+  
+  .formSection {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainContentContainer,
+  .secondarySection,
+  .tertiarySection {
+    padding: var(--spacing-2xl) 0;
+  }
+}
