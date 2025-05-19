@@ -1,12 +1,13 @@
 import { loadStripe, Stripe } from '@stripe/stripe-js';
 
-let stripePromise: Promise<Stripe | null>;
+let stripePromise: Promise<Stripe | null> | null = null;
 
 export const getStripe = () => {
   if (!stripePromise) {
     const key = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
     if (!key) {
-      throw new Error('Stripe publishable key is not defined in environment variables');
+      console.error('Stripe publishable key is not defined');
+      return Promise.resolve(null);
     }
     stripePromise = loadStripe(key);
   }
@@ -45,7 +46,7 @@ export const PLANS: PlanData[] = [
     name: 'Starter',
     description: 'Perfect for teams getting started with workplace analytics',
     price: {
-      id: 'price_starter',
+      id: 'price_starter_monthly', 
       name: 'Starter Plan',
       description: 'Monthly subscription for Starter Plan',
       recurring: {
@@ -70,7 +71,7 @@ export const PLANS: PlanData[] = [
     name: 'Professional',
     description: 'Comprehensive analytics for mid-sized organizations',
     price: {
-      id: 'price_professional',
+      id: 'price_professional_monthly', // This should match your actual Stripe price ID
       name: 'Professional Plan',
       description: 'Monthly subscription for Professional Plan',
       recurring: {
@@ -97,7 +98,7 @@ export const PLANS: PlanData[] = [
     name: 'Enterprise',
     description: 'Custom solutions for large organizations',
     price: {
-      id: 'price_enterprise',
+      id: '', // Enterprise plans typically don't have a fixed price ID
       name: 'Enterprise Plan',
       description: 'Custom pricing for Enterprise Plan',
       unit_amount: 0, // Custom pricing
@@ -125,8 +126,51 @@ export const formatCurrency = (amount: number, currency: string = 'usd'): string
   }).format(amount / 100);
 };
 
-export async function createCheckoutSession(priceId: string, successUrl: string, cancelUrl: string) {
+// Get plan by interval (month/year)
+export const getPlanPrice = (planType: PlanType, interval: 'month' | 'year'): PriceData => {
+  const plan = PLANS.find(p => p.type === planType);
+  
+  if (!plan) {
+    throw new Error(`Plan not found for type: ${planType}`);
+  }
+  
+  // If it's an enterprise plan with no fixed price
+  if (planType === 'enterprise') {
+    return plan.price;
+  }
+  
+  // For annual billing, we could either:
+  // 1. Use a different price ID (recommended)
+  // 2. Calculate a discounted amount (as shown below)
+  if (interval === 'year') {
+    return {
+      ...plan.price,
+      id: plan.price.id.replace('_monthly', '_yearly'), // Assuming you have yearly price IDs
+      unit_amount: plan.price.unit_amount * 10, // 12 months with 2 months free
+      recurring: {
+        interval: 'year'
+      }
+    };
+  }
+  
+  return plan.price;
+};
+
+export interface CheckoutOptions {
+  priceId: string;
+  successUrl: string;
+  cancelUrl: string;
+  mode?: 'subscription' | 'payment';
+}
+
+export async function createCheckoutSession({
+  priceId,
+  successUrl,
+  cancelUrl,
+  mode = 'subscription'
+}: CheckoutOptions) {
   try {
+    // Make API call to your backend endpoint
     const response = await fetch('/api/checkout', {
       method: 'POST',
       headers: {
@@ -136,21 +180,33 @@ export async function createCheckoutSession(priceId: string, successUrl: string,
         priceId,
         successUrl,
         cancelUrl,
+        mode,
       }),
     });
 
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'API request failed');
+    }
+
     const { sessionId } = await response.json();
+    
+    // Get Stripe instance
     const stripe = await getStripe();
     
     if (!stripe) {
       throw new Error('Failed to load Stripe.js');
     }
     
+    // Redirect to Stripe Checkout
     const { error } = await stripe.redirectToCheckout({ sessionId });
     
     if (error) {
-      throw new Error(error.message || 'An unknown error occurred');
+      console.error('Stripe redirect error:', error);
+      throw new Error(error.message || 'Failed to redirect to checkout');
     }
+    
+    return { success: true };
   } catch (error) {
     console.error('Error creating checkout session:', error);
     throw error;

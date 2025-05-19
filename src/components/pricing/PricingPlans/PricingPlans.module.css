@@ -1,3 +1,4 @@
+
 .pricingSection {
   padding: var(--spacing-3xl) 0;
 }
@@ -17,6 +18,23 @@
   font-size: var(--font-size-lg);
   color: var(--color-text-light);
   margin-bottom: var(--spacing-xl);
+}
+
+/* Error message styling */
+.errorAlert {
+  background-color: #fee2e2;
+  border: 1px solid #f87171;
+  color: #b91c1c;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .billingToggle {
@@ -238,6 +256,30 @@ input:checked + .slider:before {
   margin-bottom: var(--spacing-lg);
 }
 
+/* Test mode indicator styling */
+.testModeIndicator {
+  margin-top: var(--spacing-xl);
+  text-align: center;
+  padding: var(--spacing-md);
+  background-color: #fef3c7; /* Light yellow */
+  border: 1px dashed #f59e0b; /* Amber/orange border */
+  border-radius: var(--border-radius-md);
+  color: #92400e; /* Dark amber */
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.testModeIndicator p {
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--spacing-xs);
+}
+
+.testModeIndicator small {
+  display: block;
+  opacity: 0.9;
+}
+
 /* Dark mode adjustments */
 @media (prefers-color-scheme: dark) {
   .planCard {
@@ -250,6 +292,18 @@ input:checked + .slider:before {
   
   .enterpriseNote {
     background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  .errorAlert {
+    background-color: rgba(220, 38, 38, 0.2);
+    border-color: rgba(248, 113, 113, 0.4);
+    color: #ef4444;
+  }
+  
+  .testModeIndicator {
+    background-color: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.4);
+    color: #f59e0b;
   }
 }
 

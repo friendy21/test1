@@ -1,25 +1,40 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Button from '@/components/common/Button/Button';
-import { PLANS, formatCurrency, createCheckoutSession, PlanType } from '@/lib/stripe';
+import { 
+  PLANS, 
+  formatCurrency, 
+  createCheckoutSession, 
+  PlanType, 
+  getPlanPrice 
+} from '@/lib/stripe';
 import styles from './PricingPlans.module.css';
 
 const PricingPlans: React.FC = () => {
   const [billingCycle, setBillingCycle] = useState<'month' | 'year'>('month');
   const [isLoading, setIsLoading] = useState<PlanType | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
+  // Clear error after 5 seconds
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setError(null);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
+
+  // This function now has better error handling
   const handlePlanSelection = async (planType: PlanType) => {
     try {
-      const plan = PLANS.find(p => p.type === planType);
-      
-      if (!plan) {
-        throw new Error('Plan not found');
-      }
+      // Clear any previous errors
+      setError(null);
       
       // Enterprise plan redirects to contact page
       if (planType === 'enterprise') {
@@ -27,25 +42,35 @@ const PricingPlans: React.FC = () => {
         return;
       }
       
-      // Check if the plan has a price
-      if (!plan.price.id) {
+      setIsLoading(planType);
+      
+      // Get the price based on the current billing cycle
+      const priceData = getPlanPrice(planType, billingCycle);
+      
+      // Check if the plan has a valid price
+      if (!priceData.id) {
         throw new Error('This plan is not available for direct purchase');
       }
       
-      setIsLoading(planType);
+      console.log(`Starting checkout process for plan ${planType} with price ID: ${priceData.id}`);
       
       const successUrl = `${siteUrl}/checkout/success`;
       const cancelUrl = `${siteUrl}/pricing`;
       
-      await createCheckoutSession(
-        plan.price.id, 
+      // Get these from your Stripe Dashboard in Test Mode
+      console.log(`Using success URL: ${successUrl}`);
+      console.log(`Using cancel URL: ${cancelUrl}`);
+      
+      await createCheckoutSession({
+        priceId: priceData.id, 
         successUrl,
-        cancelUrl
-      );
+        cancelUrl,
+        mode: 'subscription'
+      });
       
     } catch (error) {
       console.error('Failed to handle plan selection:', error);
-      alert('There was an error processing your request. Please try again later.');
+      setError('There was an error processing your request. Please try again later.');
     } finally {
       setIsLoading(null);
     }
@@ -55,10 +80,10 @@ const PricingPlans: React.FC = () => {
     setBillingCycle(prev => prev === 'month' ? 'year' : 'month');
   };
 
-  // Apply discount for annual billing (2 months free)
-  const getAdjustedPrice = (price: number, interval: 'month' | 'year') => {
-    if (interval === 'year') {
-      return (price * 10); // 12 months - 2 months free
+  // Calculate price based on billing cycle
+  const getAdjustedPrice = (price: number) => {
+    if (billingCycle === 'year') {
+      return (price * 10); // 12 months - 2 months free (16.67% discount)
     }
     return price;
   };
@@ -68,8 +93,14 @@ const PricingPlans: React.FC = () => {
       <div className={styles.pricingHeader}>
         <h2 className={styles.title}>Transparent Pricing for Every Organization</h2>
         <p className={styles.subtitle}>
-          Choose the plan that fits your organization&apos; size and needs. All plans include core analytics features.
+          Choose the plan that fits your organization&apos;s size and needs. All plans include core analytics features.
         </p>
+        
+        {error && (
+          <div className={styles.errorAlert}>
+            <p>{error}</p>
+          </div>
+        )}
         
         <div className={styles.billingToggle}>
           <span className={`${styles.billingOption} ${billingCycle === 'month' ? styles.active : ''}`}>
@@ -95,7 +126,7 @@ const PricingPlans: React.FC = () => {
       <div className={styles.plansContainer}>
         {PLANS.map((plan) => {
           const price = plan.price.unit_amount;
-          const adjustedPrice = getAdjustedPrice(price, billingCycle);
+          const adjustedPrice = getAdjustedPrice(price);
           const isEnterprise = plan.type === 'enterprise';
           
           return (
@@ -175,6 +206,12 @@ const PricingPlans: React.FC = () => {
         <Link href="/contact?plan=enterprise" legacyBehavior passHref>
           <Button variant="secondary">Schedule a Consultation</Button>
         </Link>
+      </div>
+
+      {/* Add this test mode indicator for debugging */}
+      <div className={styles.testModeIndicator}>
+        <p>🧪 Test Mode Active - Using Stripe Test Environment</p>
+        <small>You can use test card: 4242 4242 4242 4242 (any future date, any CVC, any postal code)</small>
       </div>
     </section>
   );

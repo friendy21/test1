@@ -4,39 +4,67 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { toast } from 'react-hot-toast';
 import Button from '@/components/common/Button/Button';
-import styles from './page.module.css';
+import styles from '../success/page.module.css';
 
 export default function CheckoutSuccessPage() {
   const [isLoading, setIsLoading] = useState(true);
-  const [customerEmail, setCustomerEmail] = useState<string | null>(null);
+  const [sessionDetails, setSessionDetails] = useState<{
+    customerEmail?: string;
+    planName?: string;
+    subscriptionId?: string;
+  } | null>(null);
+  
   const searchParams = useSearchParams();
   const sessionId = searchParams?.get('session_id');
 
   useEffect(() => {
-    if (sessionId) {
-      // In a real application, you would verify the checkout session
-      // with your backend and get customer details
-      fetchCheckoutSession(sessionId);
-    } else {
+    if (!sessionId) {
       setIsLoading(false);
+      return;
     }
-  }, [sessionId]);
 
-  const fetchCheckoutSession = async (sessionId: string) => {
-    try {
-      // Simulate API call to get session details
-      // In a real app, you would fetch this from your API
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Mock email for demo purposes
-      setCustomerEmail('customer@example.com');
-    } catch (error) {
-      console.error('Error fetching checkout session:', error);
-    } finally {
+    const verifySession = async () => {
+      try {
+        // In a production app, this would be a real API call to verify the session
+        // and get customer details from your database or Stripe
+        const response = await fetch(`/api/verify-session?session_id=${sessionId}`);
+        
+        if (!response.ok) {
+          throw new Error('Failed to verify checkout session');
+        }
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          setSessionDetails({
+            customerEmail: data.customer.email || 'customer@example.com',
+            planName: data.subscription.plan || 'Professional Plan',
+            subscriptionId: data.subscription.id || 'sub_123456789'
+          });
+        }
+      } catch (error) {
+        console.error('Error verifying checkout session:', error);
+        toast.error('Could not verify your subscription. Please contact support.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    // Simulate API call to verify session
+    setTimeout(() => {
+      setSessionDetails({
+        customerEmail: 'customer@example.com',
+        planName: 'Professional Plan',
+        subscriptionId: 'sub_123456789'
+      });
       setIsLoading(false);
-    }
-  };
+    }, 1500);
+    
+    // In a real app, uncomment this:
+    // verifySession();
+  }, [sessionId]);
 
   if (isLoading) {
     return (
@@ -78,10 +106,13 @@ export default function CheckoutSuccessPage() {
           Thank you for subscribing to Glynac. We're excited to help you transform your workplace analytics!
         </p>
         
-        {customerEmail && (
+        {sessionDetails?.customerEmail && (
           <div className={styles.detailsCard}>
             <p className={styles.detailsText}>
-              We've sent a confirmation email to <strong>{customerEmail}</strong> with your order details and next steps.
+              We've sent a confirmation email to <strong>{sessionDetails.customerEmail}</strong> with your order details and next steps.
+              {sessionDetails.subscriptionId && (
+                <span> Your subscription ID is <strong>{sessionDetails.subscriptionId}</strong>.</span>
+              )}
             </p>
           </div>
         )}

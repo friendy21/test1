@@ -1,7 +1,10 @@
+
 import type { Metadata } from 'next';
 import { Inter, Poppins } from 'next/font/google';
+import { Toaster } from 'react-hot-toast';
 import Navigation from '../components/common/Navigation/Navigation';
 import Footer from '../components/common/Footer/Footer';
+import { StripeProvider } from '@/providers/StripeProvider';
 import '@/styles/reset.css';
 import '@/styles/variables.css';  
 
@@ -52,9 +55,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <body>
-        <Navigation />
-        <main>{children}</main>
-        <Footer />
+        <StripeProvider>
+          <Navigation />
+          <main>{children}</main>
+          <Footer />
+          <Toaster position="top-center" />
+        </StripeProvider>
       </body>
     </html>
   );
