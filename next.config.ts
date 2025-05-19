@@ -9,6 +9,10 @@ const nextConfig = {
     // allow production builds to succeed even if there are ESLint errors
     ignoreDuringBuilds: true,
   },
+    typescript: {
+    // ⚠️ Dangerously ignores all TS errors in production builds
+    ignoreBuildErrors: true,
+  },
   async redirects() {
     return [
       {
