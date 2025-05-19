@@ -1,11 +1,15 @@
+// RoleBasedBenefits.tsx
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import gsap from 'gsap';
 import styles from './RoleBasedBenefits.module.css';
 
+type RoleId = 'executives' | 'managers' | 'operations' | 'hr';
+
 type Role = {
-  id: string;
+  id: RoleId;
   icon: string;
   title: string;
   headline: string;
@@ -15,120 +19,165 @@ type Role = {
 };
 
 const RoleBasedBenefits: React.FC = () => {
-  const [activeRole, setActiveRole] = useState('executives');
-  
+  const [activeRole, setActiveRole] = useState<RoleId>('executives');
+  const contentRef = useRef<HTMLDivElement>(null);
+  const dashboardRef = useRef<HTMLDivElement>(null);
+
   const roles: Role[] = [
     {
       id: 'executives',
-      icon: '📈',
-      title: 'For CXOs & Executives',
-      headline: 'Strategic Oversight & Organizational Health',
+      icon: '👤',
+      title: 'Executives',
+      headline: 'Drive Strategy with Real-Time Insights',
       points: [
-        'Gain unprecedented visibility into enterprise-wide people-risk and well-being trends.',
-        'Make data-driven decisions to optimize talent retention, productivity, and innovation.',
-        'Proactively mitigate risks associated with burnout, attrition, and disengagement.'
+        'Access high-level KPIs instantly',
+        'Monitor organizational performance',
+        'Make data-driven strategic decisions',
       ],
-      ctaText: 'See Solution for Executives',
-      ctaLink: '/solutions#executives'
+      ctaText: 'Explore Executive Dashboard',
+      ctaLink: '#executive-demo',
     },
     {
       id: 'managers',
       icon: '👥',
-      title: 'For People Managers & Team Leads',
-      headline: 'Empower Your Teams to Thrive',
+      title: 'Managers',
+      headline: 'Empower Your Team with Clear Metrics',
       points: [
-        'Understand individual and team needs without micromanaging or waiting for issues to surface.',
-        'Receive early warnings to provide timely support for workload, stress, or disengagement.',
-        'Foster a culture of trust and psychological safety within your team.'
+        'Track team performance metrics',
+        'Identify bottlenecks in real-time',
+        'Optimize resource allocation',
       ],
-      ctaText: 'See Solution for Managers',
-      ctaLink: '/solutions#managers'
+      ctaText: 'See Manager Tools',
+      ctaLink: '#manager-demo',
     },
     {
       id: 'operations',
       icon: '⚙️',
-      title: 'For Operations & Project Leaders',
-      headline: 'Optimize Workflows & Collaboration',
+      title: 'Operations',
+      headline: 'Streamline Processes with Precision',
       points: [
-        'Identify bottlenecks, balance workloads across teams, and improve resource allocation.',
-        'Analyze meeting effectiveness and reduce unnecessary collaborative overhead.',
-        'Enhance cross-functional collaboration by understanding communication patterns.'
+        'Monitor operational efficiency',
+        'Analyze workflow data',
+        'Reduce downtime with insights',
       ],
-      ctaText: 'See Solution for Ops Leaders',
-      ctaLink: '/solutions#operations'
+      ctaText: 'View Operations Suite',
+      ctaLink: '#operations-demo',
     },
     {
       id: 'hr',
-      icon: '🧠',
-      title: 'For HR & People Ops Professionals',
-      headline: 'Drive Proactive HR Initiatives & Boost Retention',
+      icon: '💼',
+      title: 'HR',
+      headline: 'Enhance People Management',
       points: [
-        'Access leading indicators for attrition, burnout, and engagement to inform HR strategy.',
-        'Develop targeted well-being programs based on real data, not just surveys.',
-        'Champion a data-informed culture of employee well-being and proactive support.'
+        'Track employee engagement',
+        'Analyze workforce trends',
+        'Support talent development',
       ],
-      ctaText: 'See Solution for HR Professionals',
-      ctaLink: '/solutions#hr'
-    }
+      ctaText: 'Discover HR Analytics',
+      ctaLink: '#hr-demo',
+    },
   ];
-  
+
   const activeRoleData = roles.find(role => role.id === activeRole) || roles[0];
 
+  useEffect(() => {
+    if (contentRef.current && dashboardRef.current) {
+      const tl = gsap.timeline();
+      tl.fromTo(contentRef.current.querySelector(`.${styles.tabs__content__header}`), 
+        { opacity: 0, y: -20 }, 
+        { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out' }
+      )
+      .fromTo(contentRef.current.querySelectorAll(`.${styles.tabs__content__benefit}`), 
+        { opacity: 0, y: 20 }, 
+        { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power3.out' }, '-=0.2'
+      )
+      .fromTo(contentRef.current.querySelector(`.${styles.tabs__content__footer}`), 
+        { opacity: 0 }, 
+        { opacity: 1, duration: 0.3 }, '-=0.3'
+      )
+      .fromTo(dashboardRef.current, 
+        { opacity: 0, scale: 0.95 }, 
+        { opacity: 1, scale: 1, duration: 0.5, ease: 'power3.out' }, '-=0.2'
+      )
+      .fromTo(dashboardRef.current.querySelectorAll(`.${styles.tabs__dashboard__widget}`), 
+        { opacity: 0, scale: 0.9 }, 
+        { opacity: 1, scale: 1, duration: 0.4, stagger: 0.1, ease: 'power3.out' }, '-=0.3'
+      )
+      .fromTo(dashboardRef.current.querySelectorAll(`.${styles.chart__bar}`), 
+        { scaleY: 0 }, 
+        { scaleY: 1, duration: 0.5, stagger: 0.05, ease: 'power3.out' }, '-=0.2'
+      );
+    }
+  }, [activeRole]);
+
   return (
-    <section className={styles.roleBasedSection}>
-      <div className={styles.container}>
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.title}>Tailored Insights for Strategic Impact</h2>
-          <p className={styles.subtitle}>
+    <section className={styles.role}>
+      <div className={styles.role__container}>
+        <div className={styles.role__header}>
+          <h2 className={styles.role__title}>Tailored Insights for Strategic Impact</h2>
+          <p className={styles.role__subtitle}>
             GLYNAC provides customized insights for every leader in your organization, ensuring everyone has the data they need to make an impact.
           </p>
         </div>
         
-        <div className={styles.tabsContainer}>
-          <div className={styles.tabs}>
+        <div className={styles.tabs}>
+          <div className={styles.tabs__list} role="tablist">
             {roles.map((role) => (
               <button
                 key={role.id}
-                className={`${styles.tabButton} ${activeRole === role.id ? styles.activeTab : ''}`}
+                role="tab"
+                aria-selected={activeRole === role.id}
+                aria-controls={`tabpanel-${role.id}`}
+                className={`${styles.tabs__button} ${activeRole === role.id ? styles['tabs__button--active'] : ''}`}
                 onClick={() => setActiveRole(role.id)}
               >
-                <span className={styles.tabIcon}>{role.icon}</span>
-                <span className={styles.tabLabel}>{role.title}</span>
+                <span className={styles.tabs__button__icon}>{role.icon}</span>
+                <span className={styles.tabs__button__label}>{role.title}</span>
               </button>
             ))}
           </div>
           
-          <div className={styles.tabContent}>
-            <div className={styles.roleHeader}>
-              <h3 className={styles.roleTitle}>{activeRoleData.headline}</h3>
+          <div 
+            className={styles.tabs__content} 
+            ref={contentRef} 
+            role="tabpanel" 
+            id={`tabpanel-${activeRole}`}
+          >
+            <div className={styles.tabs__content__header}>
+              <h3 className={styles.tabs__content__title}>{activeRoleData.headline}</h3>
             </div>
             
-            <ul className={styles.benefitsList}>
+            <ul className={styles.tabs__content__benefits}>
               {activeRoleData.points.map((point, index) => (
-                <li key={index} className={styles.benefitItem}>
-                  <span className={styles.checkIcon}>✓</span>
+                <li key={index} className={styles.tabs__content__benefit}>
+                  <span className={styles.tabs__content__check}>✓</span>
                   <span>{point}</span>
                 </li>
               ))}
             </ul>
             
-            <div className={styles.roleFooter}>
-              <Link href={activeRoleData.ctaLink} className={styles.roleCtaButton}>
+            <div className={styles.tabs__content__footer}>
+              <Link href={activeRoleData.ctaLink} className={styles.tabs__content__cta}>
                 {activeRoleData.ctaText}
               </Link>
             </div>
             
-            <div className={styles.roleDashboardPreview}>
-              {/* In a real implementation, this would be a dashboard preview image */}
-              <div className={styles.dashboardPlaceholder}>
-                <div className={styles.dashboardHeader}>
-                  <div className={styles.dashboardTitle}>{activeRoleData.title} Dashboard</div>
+            <div className={styles.tabs__dashboard} ref={dashboardRef}>
+              <div className={styles.tabs__dashboard__placeholder}>
+                <div className={styles.tabs__dashboard__header}>
+                  <div className={styles.tabs__dashboard__title}>{activeRoleData.title} Dashboard</div>
                 </div>
-                <div className={styles.dashboardContent}>
-                  <div className={styles.dashboardWidget}></div>
-                  <div className={styles.dashboardWidget}></div>
-                  <div className={styles.dashboardWidget}></div>
-                  <div className={styles.dashboardWidget}></div>
+                <div className={styles.tabs__dashboard__content}>
+                  {Array.from({ length: 4 }).map((_, index) => (
+                    <div key={index} className={styles.tabs__dashboard__widget}>
+                      <div className={styles.widget__title}>Metric {index + 1}</div>
+                      <div className={styles.widget__chart}>
+                        {Array.from({ length: 5 }).map((_, barIndex) => (
+                          <div key={barIndex} className={styles.chart__bar} style={{ height: `${20 + barIndex * 10}px` }}></div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

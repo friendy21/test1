@@ -296,9 +296,9 @@ export default function SolutionsPage() {
           <div className={styles.ctaContent}>
             <h2 className={styles.ctaTitle}>See Glynac in Action for Your Specific Challenges</h2>
             <p className={styles.ctaDescription}>
-              Our team will tailor a demonstration to address your organization's specific challenges and show you exactly how Glynac can deliver measurable improvements.
+              Our team will tailor a demonstration to address your organization&#39;s specific challenges and show you exactly how Glynac can deliver measurable improvements.
             </p>
-            <Link href="/contact" legacyBehavior passHref>
+            <Link href="/contact" passHref>
               <Button variant="primary" size="large">Request a Customized Demo</Button>
             </Link>
           </div>

@@ -1,45 +1,140 @@
+
 "use client";
 // src/components/common/Navigation/Navigation.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Button from '@/components/common/Button/Button';
+import gsap from 'gsap';
 import styles from './Navigation.module.css';
 
-type MenuItem = {
+// Properly typed interface for menu items
+interface SubmenuItem {
   label: string;
   href: string;
-  children?: Array<{
-    label: string;
-    href: string;
-    description?: string;
-  }>;
-};
+  description?: string;
+}
+
+interface MenuItem {
+  label: string;
+  href: string;
+  children?: SubmenuItem[];
+}
 
 const Navigation: React.FC = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  // State management
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-
+  
+  // GSAP animation refs
+  const headerRef = useRef<HTMLElement>(null);
+  const mobileNavRef = useRef<HTMLDivElement>(null);
+  const timelineRef = useRef<gsap.core.Timeline | null>(null);
+  
+  // Handle scroll behavior
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = (): void => {
       setIsScrolled(window.scrollY > 10);
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-    // Prevent body scrolling when mobile menu is open
-    document.body.style.overflow = isMobileMenuOpen ? 'visible' : 'hidden';
+  
+  // GSAP animations setup
+  useEffect(() => {
+    timelineRef.current = gsap.timeline({ paused: true });
+    
+    if (mobileNavRef.current) {
+      // Setting initial state
+      gsap.set(mobileNavRef.current, { 
+        xPercent: 100,
+        opacity: 0
+      });
+      
+      // Mobile menu animation
+      timelineRef.current
+        .to(mobileNavRef.current, { 
+          xPercent: 0, 
+          opacity: 1, 
+          duration: 0.4, 
+          ease: "power3.out" 
+        })
+        .fromTo(
+          `.${styles.mobileNavItem}`, 
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, stagger: 0.05, duration: 0.3, ease: "power2.out" },
+          "-=0.2"
+        );
+    }
+    
+    return () => {
+      if (timelineRef.current) {
+        timelineRef.current.kill();
+      }
+    };
+  }, []);
+  
+  // Toggle mobile menu with animation
+  const toggleMobileMenu = (): void => {
+    if (timelineRef.current) {
+      if (isMobileMenuOpen) {
+        gsap.to(mobileNavRef.current, { 
+          xPercent: 100, 
+          opacity: 0, 
+          duration: 0.3, 
+          ease: "power2.in",
+          onComplete: () => {
+            document.body.style.overflow = 'visible';
+            setIsMobileMenuOpen(false);
+          }
+        });
+      } else {
+        setIsMobileMenuOpen(true);
+        document.body.style.overflow = 'hidden';
+        timelineRef.current.play(0);
+      }
+    }
   };
 
-  const handleDropdownToggle = (label: string) => {
+  // Handle dropdown menu toggle
+  const handleDropdownToggle = (label: string): void => {
     setActiveDropdown(activeDropdown === label ? null : label);
+    
+    // Animate dropdown appearance
+    if (activeDropdown !== label) {
+      gsap.fromTo(
+        `.${styles.dropdownMenu}`,
+        { opacity: 0, y: -10 },
+        { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }
+      );
+    }
   };
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent): void => {
+      const target = e.target as Node;
+      const dropdowns = document.querySelectorAll(`.${styles.dropdown}`);
+      
+      let isClickInsideDropdown = false;
+      dropdowns.forEach(dropdown => {
+        if (dropdown.contains(target)) {
+          isClickInsideDropdown = true;
+        }
+      });
+      
+      if (!isClickInsideDropdown) {
+        setActiveDropdown(null);
+      }
+    };
+    
+    document.addEventListener('click', handleOutsideClick);
+    return () => document.removeEventListener('click', handleOutsideClick);
+  }, []);
+
+  // Menu items data
   const menuItems: MenuItem[] = [
     {
       label: 'Solutions',
@@ -86,47 +181,61 @@ const Navigation: React.FC = () => {
   ];
 
   return (
-    <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
-      <div className={styles.container}>
-        <div className={styles.logo}>
-          <Link href="/">
+    <header 
+      ref={headerRef}
+      className={`${styles.header} ${isScrolled ? styles['header--scrolled'] : ''}`}
+      aria-label="Main navigation"
+    >
+      <div className={styles.header__container}>
+        <div className={styles.header__logo}>
+          <Link href="/" className={styles.header__logoLink}>
             <Image
               src="/images/logos/glynac-logo.svg"
               alt="Glynac Logo"
               width={120}
               height={36}
               priority
+              className={styles.header__logoImage}
             />
           </Link>
         </div>
 
         {/* Desktop Navigation */}
-        <nav className={styles.desktopNav}>
-          <ul className={styles.navList}>
+        <nav className={styles.nav} aria-label="Desktop navigation">
+          <ul className={styles.nav__list}>
             {menuItems.map((item) => (
-              <li key={item.label} className={styles.navItem}>
+              <li key={item.label} className={styles.nav__item}>
                 {item.children ? (
                   <div className={styles.dropdown}>
                     <button
-                      className={styles.dropdownToggle}
-                      onClick={() => handleDropdownToggle(item.label)}
+                      className={styles.dropdown__toggle}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDropdownToggle(item.label);
+                      }}
                       aria-expanded={activeDropdown === item.label}
+                      aria-controls={`dropdown-${item.label}`}
                     >
                       {item.label}
-                      <span className={styles.dropdownIcon}>▾</span>
+                      <span className={`${styles.dropdown__icon} ${activeDropdown === item.label ? styles['dropdown__icon--active'] : ''}`}>▾</span>
                     </button>
+                    
                     {activeDropdown === item.label && (
-                      <div className={styles.dropdownMenu}>
+                      <div 
+                        id={`dropdown-${item.label}`}
+                        className={styles.dropdown__menu}
+                        aria-label={`${item.label} submenu`}
+                      >
                         {item.children.map((child) => (
                           <Link
                             href={child.href}
                             key={child.label}
-                            className={styles.dropdownItem}
+                            className={styles.dropdown__item}
                             onClick={() => setActiveDropdown(null)}
                           >
-                            <span className={styles.dropdownItemTitle}>{child.label}</span>
+                            <span className={styles.dropdown__itemTitle}>{child.label}</span>
                             {child.description && (
-                              <span className={styles.dropdownItemDescription}>{child.description}</span>
+                              <span className={styles.dropdown__itemDescription}>{child.description}</span>
                             )}
                           </Link>
                         ))}
@@ -134,7 +243,7 @@ const Navigation: React.FC = () => {
                     )}
                   </div>
                 ) : (
-                  <Link href={item.href} className={styles.navLink}>
+                  <Link href={item.href} className={styles.nav__link}>
                     {item.label}
                   </Link>
                 )}
@@ -143,47 +252,59 @@ const Navigation: React.FC = () => {
           </ul>
         </nav>
 
-        <div className={styles.ctaContainer}>
-          <Link href="/contact">
+        {/* CTA Container */}
+        <div className={styles.cta}>
+          <Link href="/contact" className={styles.cta__demo}>
             <Button variant="primary" size="medium">Request Demo</Button>
           </Link>
-          <Link href="https://app.glynac.com/login" className={styles.loginLink}>
+          <Link href="https://app.glynac.com/login" className={styles.cta__login}>
             Log In
           </Link>
         </div>
 
         {/* Mobile Menu Toggle */}
         <button
-          className={`${styles.mobileMenuToggle} ${isMobileMenuOpen ? styles.active : ''}`}
+          className={`${styles.mobileToggle} ${isMobileMenuOpen ? styles['mobileToggle--active'] : ''}`}
           onClick={toggleMobileMenu}
-          aria-label="Toggle menu"
+          aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isMobileMenuOpen}
+          aria-controls="mobile-navigation"
         >
-          <span className={styles.hamburgerLine}></span>
-          <span className={styles.hamburgerLine}></span>
-          <span className={styles.hamburgerLine}></span>
+          <span className={styles.mobileToggle__line}></span>
+          <span className={styles.mobileToggle__line}></span>
+          <span className={styles.mobileToggle__line}></span>
         </button>
 
         {/* Mobile Navigation */}
-        <div className={`${styles.mobileNav} ${isMobileMenuOpen ? styles.active : ''}`}>
-          <ul className={styles.mobileNavList}>
+        <div 
+          ref={mobileNavRef}
+          id="mobile-navigation"
+          className={`${styles.mobileNav} ${isMobileMenuOpen ? styles['mobileNav--active'] : ''}`}
+          aria-hidden={!isMobileMenuOpen}
+        >
+          <ul className={styles.mobileNav__list}>
             {menuItems.map((item) => (
               <li key={item.label} className={styles.mobileNavItem}>
                 {item.children ? (
                   <>
                     <button
-                      className={styles.mobileDropdownToggle}
+                      className={styles.mobileNav__dropdownToggle}
                       onClick={() => handleDropdownToggle(item.label)}
                       aria-expanded={activeDropdown === item.label}
+                      aria-controls={`mobile-dropdown-${item.label}`}
                     >
                       {item.label}
-                      <span className={`${styles.mobileDropdownIcon} ${activeDropdown === item.label ? styles.active : ''}`}>+</span>
+                      <span className={`${styles.mobileNav__dropdownIcon} ${activeDropdown === item.label ? styles['mobileNav__dropdownIcon--active'] : ''}`}>+</span>
                     </button>
-                    <ul className={`${styles.mobileSubmenu} ${activeDropdown === item.label ? styles.active : ''}`}>
+                    <ul 
+                      id={`mobile-dropdown-${item.label}`}
+                      className={`${styles.mobileNav__submenu} ${activeDropdown === item.label ? styles['mobileNav__submenu--active'] : ''}`}
+                    >
                       {item.children.map((child) => (
-                        <li key={child.label} className={styles.mobileSubmenuItem}>
+                        <li key={child.label} className={styles.mobileNav__submenuItem}>
                           <Link
                             href={child.href}
-                            className={styles.mobileSubmenuLink}
+                            className={styles.mobileNav__submenuLink}
                             onClick={() => {
                               setActiveDropdown(null);
                               setIsMobileMenuOpen(false);
@@ -191,6 +312,9 @@ const Navigation: React.FC = () => {
                             }}
                           >
                             {child.label}
+                            {child.description && (
+                              <span className={styles.mobileNav__submenuDescription}>{child.description}</span>
+                            )}
                           </Link>
                         </li>
                       ))}
@@ -199,7 +323,7 @@ const Navigation: React.FC = () => {
                 ) : (
                   <Link
                     href={item.href}
-                    className={styles.mobileNavLink}
+                    className={styles.mobileNav__link}
                     onClick={() => {
                       setIsMobileMenuOpen(false);
                       document.body.style.overflow = 'visible';
@@ -210,13 +334,13 @@ const Navigation: React.FC = () => {
                 )}
               </li>
             ))}
-            <li className={styles.mobileCta}>
-              <Link href="/contact" passHref>
+            <li className={styles.mobileNav__ctaItem}>
+              <Link href="/contact" className={styles.mobileNav__ctaLink}>
                 <Button variant="primary" size="large" fullWidth>Request Demo</Button>
               </Link>
             </li>
-            <li className={styles.mobileCta}>
-              <Link href="https://app.glynac.com/login" passHref legacyBehavior>
+            <li className={styles.mobileNav__ctaItem}>
+              <Link href="https://app.glynac.com/login" className={styles.mobileNav__ctaLink}>
                 <Button variant="secondary" size="large" fullWidth>Log In</Button>
               </Link>
             </li>

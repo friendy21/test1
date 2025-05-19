@@ -1,158 +1,191 @@
-.socialProofBar {
-  padding: var(--spacing-2xl) 0;
-  background-color: var(--color-background-light);
-  border-top: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
-}
-
-.container {
-  max-width: var(--container-width);
-  margin: 0 auto;
-  padding: 0 var(--spacing-lg);
+.hexGalleryWrap {
+  background: #fff;
+  padding: 2rem 0 0.5rem 0;
+  width: 100vw;
+  overflow-x: auto;
   text-align: center;
 }
 
 .heading {
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-light);
-  margin-bottom: var(--spacing-lg);
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.2em;
+  letter-spacing: -0.01em;
+}
+.headingAccent {
+  color: #3b82f6;
+  position: relative;
+  padding-right: 0.3em;
+}
+.headingAccent::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 3px;
+  background: #3b82f6;
+  opacity: 0.2;
 }
 
-.logoGrid {
+.subheading {
+  color: #94a3b8;
+  font-size: 1.11rem;
+  font-weight: 400;
+  margin-bottom: 2rem;
+}
+
+.hexGrid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  gap: var(--spacing-xl);
-  margin-bottom: var(--spacing-xl);
+  gap: 0.5em;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
 }
 
-.logoItem {
-  height: 40px;
-  width: 120px;
+.hexCell {
+  width: 145px;
+  aspect-ratio: 1 / 1.1547;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  clip-path: polygon(
+    25% 5.77%, 75% 5.77%, 100% 50%, 75% 94.23%, 25% 94.23%, 0% 50%
+  );
+  background: #f8fafc;
+  box-shadow: 0 2px 14px rgba(70,110,255,0.07), 0 1.5px 10px rgba(0,0,0,0.06);
+  margin: 0.1em;
+  transition: transform 0.32s cubic-bezier(.19,1,.22,1), box-shadow 0.28s;
+  cursor: pointer;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+.hexCell:focus, .hexCell:hover {
+  outline: none;
+  box-shadow: 0 4px 22px #3b82f633, 0 1.5px 16px #1e293b21;
+  transform: scale(1.035) translateY(-2.5px);
+  z-index: 2;
+  background: #fff;
 }
 
-.logo {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  filter: grayscale(100%) opacity(70%);
-  transition: filter var(--transition-fast);
-}
-
-.logo:hover {
-  filter: grayscale(0%) opacity(100%);
-}
-
-/* Fallback for when images aren't available */
-.logoFallback {
+.hexImageWrap {
   width: 100%;
   height: 100%;
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f1f5f9;
-  color: #64748b;
-  font-size: var(--font-size-xs);
-  border-radius: var(--border-radius-sm);
 }
 
-.publicationsSection {
+.hexImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: grayscale(0%) contrast(1.05) brightness(1.02);
+  transition: filter 0.22s;
+  border-radius: 2px;
+  background: #fff;
+}
+.hexCell:focus .hexImg, .hexCell:hover .hexImg {
+  filter: grayscale(0%) contrast(1.13) brightness(1.07) saturate(1.15);
+}
+
+.hexBadgeIcon {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-xl);
-  flex-wrap: wrap;
+  font-size: 2.6rem;
+  width: 100%;
+  height: 100%;
+  background: #f1f5f9;
 }
 
-.asSeenIn {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-light);
-}
-
-.publicationLogos {
+.hexOverlay {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
   display: flex;
-  gap: var(--spacing-lg);
-  align-items: center;
-}
-
-.publicationLogo {
-  height: 30px;
-  width: 100px;
-}
-
-.trustBadges {
-  display: flex;
-  flex-wrap: wrap;
+  align-items: end;
   justify-content: center;
-  gap: var(--spacing-lg);
-  margin-bottom: var(--spacing-lg);
+  background: linear-gradient(180deg,rgba(255,255,255,0.04) 56%,rgba(46, 111, 255, 0.23) 98%);
+  opacity: 1;
+  transition: background 0.29s, opacity 0.23s;
+}
+.hexOverlayText {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #222;
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 9px #fff, 0 1.5px 2px #fff7;
+  background: rgba(255,255,255,0.88);
+  padding: 0.23em 0.85em 0.33em 0.85em;
+  border-radius: 6px;
+  margin-bottom: 1.2em;
+  box-shadow: 0 0.5px 4px #0001;
+  user-select: none;
 }
 
-.badge {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  font-size: var(--font-size-xs);
-  color: var(--color-text-light);
-  background-color: var(--color-background);
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--border-radius-full);
-  box-shadow: var(--shadow-sm);
+.hexCell:focus .hexOverlay, .hexCell:hover .hexOverlay {
+  opacity: 1;
+  background: linear-gradient(180deg,rgba(59,130,246,0.13) 12%,rgba(0,0,0,0.13) 98%);
 }
 
-.badgeIcon {
-  font-size: var(--font-size-sm);
+.trustPhraseWrapper {
+  margin-top: 2.7rem;
 }
-
 .trustPhrase {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-light);
-  margin-top: var(--spacing-lg);
-  font-style: italic;
+  font-size: 1.16rem;
+  color: #64748b;
+  font-weight: 400;
+}
+.trustEmphasis {
+  color: #1e293b;
+  font-weight: 700;
+  margin-left: 0.18em;
+  position: relative;
+}
+.trustEmphasis::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #3b82f6;
+  opacity: 0.22;
 }
 
-/* Dark mode adjustments */
-@media (prefers-color-scheme: dark) {
-  .logoFallback {
-    background-color: #334155;
-    color: #94a3b8;
+@media (max-width: 900px) {
+  .hexCell { width: 110px; }
+  .hexOverlayText { font-size: 0.97rem; }
+}
+@media (max-width: 600px) {
+  .hexGrid {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 0.14em;
+    justify-content: flex-start;
+    scroll-snap-type: x mandatory;
+    padding: 0 0.7rem;
   }
-  
-  .badge {
-    background-color: var(--color-background-light);
+  .hexCell {
+    min-width: 88px;
+    width: 30vw;
+    max-width: 110px;
+    margin: 0 0.16em;
+    scroll-snap-align: center;
   }
 }
-
-/* Responsive */
-@media (max-width: 768px) {
-  .socialProofBar {
-    padding: var(--spacing-xl) 0;
-  }
-  
-  .logoGrid {
-    gap: var(--spacing-lg);
-  }
-  
-  .logoItem {
-    width: 100px;
-    height: 35px;
-  }
-  
-  .publicationLogos {
-    margin-top: var(--spacing-sm);
-  }
-  
-  .trustBadges {
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-sm);
+@media (max-width: 400px) {
+  .hexCell {
+    min-width: 67px;
+    width: 40vw;
+    max-width: 84px;
   }
 }
