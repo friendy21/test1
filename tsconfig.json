@@ -2,6 +2,8 @@
   "compilerOptions": {
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "noUnusedLocals": false,      // don’t error on locals you never reference
+    "noUnusedParameters": false 
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
